@@ -1,0 +1,186 @@
+<!-- App Top Navigation -->
+<app-top-navigation></app-top-navigation>
+
+<!-- App Header -->
+<app-header-banner *ngIf="package" [title]=" package['Title'] " [bgImage]=" headerBgImage "></app-header-banner>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-xl-9 col-lg-8 col-12">
+
+            <!-- top gallery -->
+            <div class="swiper-gallery">
+                <main>
+                    <swiper class="swiper-wrapper gallery-main" [config]="configMain" (swiper)="setControlThumbSwiper($event)" [watchSlidesVisibility]="true" [watchSlidesProgress]="true" [controller]="{ control: controlMainSwiper }">
+                        <ng-template swiperSlide *ngFor="let image of packageImages">
+                            <div class="swiper-zoom-container">
+                                <div class="responsive-image-placeholder">
+                                    <img class="ar-placeholder" src="/assets/images/theme/aspect-ratio-placeholder/ar-4-3.png">
+                                    <div class="responsive">
+                                        <img [src]=" image ">
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </swiper>
+                </main>
+
+                <!-- thumbs -->
+                <nav>
+                    <swiper class="swiper-wrapper gallery-thumbs" [config]="configThumbs" (swiper)="setControlMainSwiper($event)" [watchSlidesVisibility]="true" [watchSlidesProgress]="true" [controller]="{ control: controlThumbSwiper }">
+                        <ng-template swiperSlide *ngFor="let image of packageImages">
+                            <div class="responsive-image-placeholder">
+                                <img class="ar-placeholder" src="/assets/images/theme/aspect-ratio-placeholder/ar-4-3.png">
+                                <div class="responsive">
+                                    <img [src]=" image ">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </swiper>
+                </nav>
+            </div>
+            <h2 class="py-5 display-6 fw-bold" *ngIf="package">{{ package['Title'] }} {{ package['Code'] }}</h2>
+            <p *ngIf="package" [innerHTML]="package['Description']"></p>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-12">
+            <div class="card">
+                <div class="card-body border-bottom">
+                    <h4 class="mb-0">Book This Package</h4>
+                </div>
+                <div class="card-body">
+                    <app-enquiry-sidebar></app-enquiry-sidebar>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body border-bottom">
+                    <h4 class="mb-0">Benefits Included</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="icon-list">
+                        <li>
+                            <p>
+                                <i class="fas fa-utensils"></i>
+                                <span>Meals</span>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <i class="fa fa-bed"></i>
+                                <span>Accommodation</span>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <i class="fas fa-binoculars"></i>
+                                <span>Sightseeing</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <h2 class="py-5 display-6" *ngIf="package">
+                <strong [style]="'color: #D60D45;'">Price <span class="price-inr-symbol">{{ package['Price'] | currency: 'INR':'symbol':'1.0-0' }}</span></strong>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="card mt-3">
+                <div class="card-body border-bottom">
+                    <h4 class="mb-0">Cost Inclusions</h4>
+                </div>
+                <div class="card-body inc-exc">
+                    <div *ngIf="package" [innerHTML]="package['Inclusions']"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card mt-3">
+                <div class="card-body border-bottom">
+                    <h4 class="mb-0">Cost Exclusions</h4>
+                </div>
+                <div class="card-body inc-exc">
+                    <div *ngIf="package" [innerHTML]="package['Exclusions']"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 pt-5">
+            <div class="blob mx-auto text-center">
+                <h2 class="m-0 display-6 text-uppercase">Tour Itinerary</h2>
+                <div class="divider pt-4 mb-4">
+                    <i class="fas fa-spa"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <app-itinerary-card *ngFor="let itinerary of itineraries" [itinerary]="itinerary"></app-itinerary-card>
+</div>
+<div class="container">
+    <!-- All category packages starts -->
+    <!-- <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+
+            <li class="breadcrumb-item" *ngFor="let category of ctgryPil">
+                <strong><a href="/category/{{category.CategorySlug}}">{{category.CategoryName}}</a></strong></li>
+
+        </ol>
+    </nav> -->
+    <!-- All category packages ends -->
+
+    <!-- Specific category packages starts -->
+
+
+    <div class="row">
+        <div class="col-md-12" routerLink="/category/{{specificCategory.CategorySlug}}" title="{{specificCategory.CategoryName}}">
+            <div class="text-center headingtext">
+                <Strong class="btn btn-link category text-uppercase">{{specificCategory.CategoryName}}</Strong>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="text-center headingtext ps-3 pt-2"><strong>Packages</strong></div>
+
+        </div>
+
+        <div class="col-md-12 shadow p-3 mb-5 bg-white rounded mb-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-3" *ngFor="let package of packages">
+                            <button class="btn btn-link textleft" [ngClass]="{'activeSlug': package.PackageSlug==packageID}" routerLink="/package/{{package.PackageSlug}}" title="{{package.Title}}">{{package.Title}}</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+
+            <li class="breadcrumb-item cursor-pointer" *ngFor="let category of specificCategory" routerLink="/category/{{category.CategorySlug}}">
+                <span>{{category.CategoryName}}</span></li>
+            <li class="breadcrumb-item cursor-pointer" *ngFor="let package of packages" routerLink="/category/{{package.PackageSlug}}">
+                <span>{{package.Title}}</span></li>
+
+
+
+        </ol>
+    </nav> -->
+    <!-- Specific packages ends -->
+</div>
+<!-- footer -->
+<app-footer></app-footer>

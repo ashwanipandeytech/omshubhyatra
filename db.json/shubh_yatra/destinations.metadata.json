@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"shubh_yatra.destinations"}],"uuid":"6185ba2e4f004caa8a4739aa70bba9b6"}

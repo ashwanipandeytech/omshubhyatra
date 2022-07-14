@@ -1,0 +1,132 @@
+<!-- App Top Navigation -->
+<app-top-navigation></app-top-navigation>
+
+<app-header-banner [title]="'Your Feedback'" [bgImage]="'assets/images/theme/slider/slide-2.jpg'"></app-header-banner>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 py-5">
+            <!-- <h1 class="display-3 mb-5 text-center">Your Feedback</h1> -->
+
+            <!-- Error Alert -->
+            <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ errorMessage }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <form class="gateway-form" [formGroup]="formGroup" (ngSubmit)="feedbackSubmitAction()">
+                <div class="row">
+                    <div class="col-md-4 col-12 mb-3">
+                        <label for="PersonName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="PersonName" formControlName="PersonName">
+                        <small *ngIf="formGroup.controls['PersonName'].invalid && (formGroup.controls['PersonName'].dirty || formGroup.controls['PersonName'].touched)" class="text-danger">
+                            <small>Please Enter Name Correctly</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['PersonName'].valid || formGroup.controls['PersonName'].untouched" class="text-muted">
+                            <small>Please Enter Name</small>
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 col-12 mb-3">
+                        <label for="EmailId" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="EmailId" formControlName="EmailId">
+                        <small *ngIf="formGroup.controls['EmailId'].invalid && (formGroup.controls['EmailId'].dirty || formGroup.controls['EmailId'].touched)" class="text-danger">
+                            <small>Please Enter Email Correctly</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['EmailId'].valid || formGroup.controls['EmailId'].untouched" class="text-muted">
+                            <small>Please Enter Email</small>
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 col-12 mb-3">
+                        <label for="MobileNo" class="form-label">Contact Number</label>
+                        <input type="number" class="form-control" id="MobileNo" formControlName="MobileNo">
+                        <small *ngIf="formGroup.controls['MobileNo'].invalid && (formGroup.controls['MobileNo'].dirty || formGroup.controls['MobileNo'].touched)" class="text-danger">
+                            <small>Please Enter Contact Number Correctly</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['MobileNo'].valid || formGroup.controls['MobileNo'].untouched" class="text-muted">
+                            <small>Please Enter Contact Number</small>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <label for="PackageSelected" class="form-label">Select Package</label>
+                        <select class="form-select" aria-label="PackageSelected" id="PackageSelected" formControlName="PackageSelected">
+                            <option [selected]="true" value="0">Select Package</option>
+                            <option *ngFor="let package of packages" value="{{package.PackageSlug}}">{{package.Title}}</option>
+                        </select>
+
+                        <small *ngIf="formGroup.controls['PackageSelected'].valid && formGroup.controls['PackageSelected'].touched" class="text-success">
+                            <small>Package Selected</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['PackageSelected'].invalid && formGroup.controls['PackageSelected'].touched" class="text-danger">
+                            <small>Select Package</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['PackageSelected'].untouched" class="text-muted">
+                            <small>Select Package</small>
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="JourneyDate" class="form-label">Journey Date</label>
+                            <input name="JourneyDate" id="JourneyDate" type="date" class="form-control" value="dd-mm-yyyy" required formControlName="JourneyDate">
+                        </div>
+                        
+                        <small *ngIf="formGroup.controls['JourneyDate'].valid && formGroup.controls['JourneyDate'].touched" class="text-success">
+                            <small>Start Date Set</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['JourneyDate'].invalid && formGroup.controls['JourneyDate'].touched" class="text-danger">
+                            <small>Invalid Start Date</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['JourneyDate'].untouched" class="text-muted">
+                            <small>Set Start Date</small>
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 col-12 mb-4">
+                        <div class="form-group">
+                            <label for="NoofPersons" class="form-label">No Of Person</label>
+                            <input type="number" class="form-control" id="NoofPersons" formControlName="NoofPersons">
+                        </div>
+
+                        <small *ngIf="formGroup.controls['NoofPersons'].valid && formGroup.controls['NoofPersons'].touched" class="text-success">
+                            <small>Number Of Person Set</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['NoofPersons'].invalid && formGroup.controls['NoofPersons'].touched" class="text-danger">
+                            <small>Invalid Number Of Person</small>
+                        </small>
+                        <small *ngIf="formGroup.controls['NoofPersons'].untouched" class="text-muted">
+                            <small>Set Number Of Person</small>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="Message">Suggestions / Feedback</label>
+                        <textarea class="form-control" id="Message" rows="8" formControlName="Message"></textarea>
+                    </div>
+
+                    <small *ngIf="formGroup.controls['Message'].valid && formGroup.controls['Message'].touched" class="text-success">
+                        <small>Suggestions / Feedback Noted</small>
+                    </small>
+                    <small *ngIf="formGroup.controls['Message'].invalid && formGroup.controls['Message'].touched" class="text-danger">
+                        <small>Too Few Words!</small>
+                    </small>
+                    <small *ngIf="formGroup.controls['Message'].untouched" class="text-muted">
+                        <small>Set Suggestions / Feedback</small>
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<app-footer></app-footer>

@@ -1,0 +1,286 @@
+<div class="sidebar-container">
+    <app-sidenav></app-sidenav>
+        
+    <div class="right-content min-vh-100">
+        <div class="container-fluid">
+            <app-page-title [title]="'Add Package'" [icon]="'fa-arrow-alt-circle-left'" [button]="'Return Back To All Packages'" [url]="'/admin/packages'"></app-page-title>
+
+            <div class="row pb-5">
+
+                <div class="col-md-8 col-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <form [formGroup]="addPackageForm" (ngSubmit)="addPackageAction()">
+                                <!-- Error Alert -->
+                                <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ errorMessage }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
+                                </div>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3 col-12">
+                                        <label for="Code" class="form-label">Package Code</label>
+                                        <input type="text" class="form-control form-control-lg" id="Code" formControlName="Code" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['Code'].valid && addPackageForm.controls['Code'].touched" class="text-success">
+                                            <small>Code Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Code'].invalid && addPackageForm.controls['Code'].touched" class="text-danger">
+                                            <small>Please Enter Package Code</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Code'].untouched" class="text-muted">
+                                            <small>Please Enter Package Code</small>
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-9 col-12">
+                                    <label for="Title" class="form-label">Package Title</label>
+                                    <input type="text" class="form-control form-control-lg" id="Title" formControlName="Title" autocomplete="off">
+
+                                    <small *ngIf="addPackageForm.controls['Title'].valid && addPackageForm.controls['Title'].touched" class="text-success">
+                                        <small>Title Set</small>
+                                    </small>
+                                    <small *ngIf="addPackageForm.controls['Title'].invalid && addPackageForm.controls['Title'].touched" class="text-danger">
+                                        <small>Please Enter Package Title</small>
+                                    </small>
+                                    <small *ngIf="addPackageForm.controls['Title'].untouched" class="text-muted">
+                                        <small>Please Enter Package Title</small>
+                                    </small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="PackageSlug" class="form-label">Package Slug</label>
+                                        <input type="text" class="form-control" id="PackageSlug" formControlName="PackageSlug" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['PackageSlug'].valid && addPackageForm.controls['PackageSlug'].touched" class="text-success">
+                                            <small>Slug Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['PackageSlug'].invalid && addPackageForm.controls['PackageSlug'].touched" class="text-danger">
+                                            <small>Please Enter Package Slug</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['PackageSlug'].untouched" class="text-muted">
+                                            <small>Please Enter Package Slug</small>
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <label for="packagePrice" class="form-label">Package Price</label>
+                                        <input type="number" class="form-control" id="packagePrice" formControlName="Price" autocomplete="off" min="0">
+                                        
+                                        <small *ngIf="addPackageForm.controls['Price'].valid && addPackageForm.controls['Price'].touched" class="text-success">
+                                            <small>Price Selected</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Price'].invalid && addPackageForm.controls['Price'].touched" class="text-danger">
+                                            <small>Please Enter Price</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Price'].untouched" class="text-muted">
+                                            <small>Please Select Price</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="CategoryId" class="form-label">Select Category</label>
+                                        <select class="form-select" aria-label="CategoryId" id="CategoryId" formControlName="CategoryId" [(ngModel)]="CategoryIdDefaultValue">
+                                            <option [selected]="true" value="0">Select Category</option>
+                                            <option *ngFor="let category of categories" value="{{category.CategoryId}}">{{category.CategoryName}}</option>
+                                        </select>
+
+                                        <small *ngIf="addPackageForm.controls['CategoryId'].valid && addPackageForm.controls['CategoryId'].touched" class="text-success">
+                                            <small>Category Selected</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['CategoryId'].invalid && addPackageForm.controls['CategoryId'].touched" class="text-danger">
+                                            <small>Select Category</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['CategoryId'].untouched" class="text-muted">
+                                            <small>Select Category</small>
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="StartDate" class="form-label">Start Date</label>
+                                            <input name="StartDate" id="StartDate" type="date" class="form-control" value="dd-mm-yyyy" required formControlName="StartDate">
+                                        </div>
+                                        
+                                        <small *ngIf="addPackageForm.controls['StartDate'].valid && addPackageForm.controls['StartDate'].touched" class="text-success">
+                                            <small>Start Date Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['StartDate'].invalid && addPackageForm.controls['StartDate'].touched" class="text-danger">
+                                            <small>Invalid Start Date</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['StartDate'].untouched" class="text-muted">
+                                            <small>Set Start Date</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="PackageType" class="form-label">Select Package Type</label>
+                                        <select class="form-select" aria-label="PackageType" id="PackageType" formControlName="Type">
+                                            <option [selected]="true" value="0">Select Package Type</option>
+                                            <option value="1">Domestic</option>
+                                            <option value="2">International</option>
+                                            <option value="3">Pilgrimage</option>
+                                            <option value="4">Fixed Departure</option>
+                                        </select>
+
+                                        <small *ngIf="addPackageForm.controls['Type'].valid && addPackageForm.controls['Type'].touched" class="text-success">
+                                            <small>Package Type Selected</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Type'].invalid && addPackageForm.controls['Type'].touched" class="text-danger">
+                                            <small>Select Package Type</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Type'].untouched" class="text-muted">
+                                            <small>Select Package Type</small>
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <label for="number-of-days" class="form-label">Number Of Days</label>
+                                        <input type="number" class="form-control" id="number-of-days" formControlName="NoOfDays" autocomplete="off" min="0">
+                                        
+                                        <small *ngIf="addPackageForm.controls['NoOfDays'].valid && addPackageForm.controls['NoOfDays'].touched" class="text-success">
+                                            <small>Valid Number of Days</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['NoOfDays'].invalid && addPackageForm.controls['NoOfDays'].touched" class="text-danger">
+                                            <small>Invalid Number of Days</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['NoOfDays'].untouched" class="text-muted">
+                                            <small>Number of Days</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="Inclusions" class="form-label">Inclusions</label>
+                                        <input type="text" class="form-control" id="Inclusions" formControlName="Inclusions" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['Inclusions'].valid && addPackageForm.controls['Inclusions'].touched" class="text-success">
+                                            <small>Extension Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Inclusions'].invalid && addPackageForm.controls['Inclusions'].touched" class="text-danger">
+                                            <small>Please Enter Inclusions Correctly</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Inclusions'].untouched" class="text-muted">
+                                            <small>Please Enter Inclusions</small>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label for="Exclusions" class="form-label">Exclusions</label>
+                                        <input type="text" class="form-control" id="Exclusions" formControlName="Exclusions" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['Exclusions'].valid && addPackageForm.controls['Exclusions'].touched" class="text-success">
+                                            <small>Extension Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Exclusions'].invalid && addPackageForm.controls['Exclusions'].touched" class="text-danger">
+                                            <small>Please Enter Exclusions Correctly</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Exclusions'].untouched" class="text-muted">
+                                            <small>Please Enter Exclusions</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="Extensions" class="form-label">Extensions</label>
+                                        <input type="text" class="form-control" id="Extensions" formControlName="Extensions" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['Extensions'].valid && addPackageForm.controls['Extensions'].touched" class="text-success">
+                                            <small>Extension Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Extensions'].invalid && addPackageForm.controls['Extensions'].touched" class="text-danger">
+                                            <small>Please Enter Extensions Correctly</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Extensions'].untouched" class="text-muted">
+                                            <small>Please Enter Extensions</small>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                    <label for="Executed" class="form-label">Executed</label>
+                                        <input type="text" class="form-control" id="Executed" formControlName="Executed" autocomplete="off">
+
+                                        <small *ngIf="addPackageForm.controls['Executed'].valid && addPackageForm.controls['Executed'].touched" class="text-success">
+                                            <small>Extension Set</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Executed'].invalid && addPackageForm.controls['Executed'].touched" class="text-danger">
+                                            <small>Please Enter Executed Correctly</small>
+                                        </small>
+                                        <small *ngIf="addPackageForm.controls['Executed'].untouched" class="text-muted">
+                                            <small>Please Enter Executed</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Description" class="form-label">Package Description</label>
+                                    <textarea class="form-control" id="Description" rows="3" formControlName="Description"></textarea>
+                                </div>
+        
+                                <button type="submit" class="btn btn-primary">Add Package</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="col-md-4 col-12 mb-3">
+                    <div class="card shadow mb-3">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="enableUpload" checked
+                                (change)="enableDisableImageUploadAction();">
+                                <label class="form-check-label" for="enableUpload">Upload Image</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3" id="uploadImageCard">
+                        <img class="card-img-top" id="blah" [src]="imageSrc || 'http://placehold.it/1920x1080'" alt="your image" />
+                        <div class="card-body">
+                            <form [formGroup]="imageUploadForm" (ngSubmit)="imageUpload()">
+                                <label for="Image" class="form-label">Package Image</label>
+                                <input class="form-control" type="file" id="Image" formControlName="Image" (change)="onFileChange($event)">
+                                
+                                <small *ngIf="imageUploadForm.controls['Image'].valid && imageUploadForm.controls['Image'].touched" class="text-success">
+                                    <small>Image URL Entered</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].invalid && imageUploadForm.controls['Image'].touched" class="text-danger">
+                                    <small>Please Enter Image URL</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].untouched" class="text-muted">
+                                    <small>Please Select Image URL</small>
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3" id="uploadUrlCard" style="display: none;">
+                        <div class="card-body">
+                            <form [formGroup]="imageUploadForm">
+                                <label for="Image" class="form-label">Package Image</label>
+                                <input class="form-control" type="text" id="ImageUrl" formControlName="Image">
+                                
+                                <small *ngIf="imageUploadForm.controls['Image'].valid && imageUploadForm.controls['Image'].touched" class="text-success">
+                                    <small>Image Selected</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].invalid && imageUploadForm.controls['Image'].touched" class="text-danger">
+                                    <small>Please Enter Image</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].untouched" class="text-muted">
+                                    <small>Please Select Image</small>
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

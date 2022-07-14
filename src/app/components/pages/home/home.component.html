@@ -1,0 +1,332 @@
+<!-- App Top Navigation -->
+<app-top-navigation></app-top-navigation>
+
+<!-- App Header -->
+<app-header-slider></app-header-slider>
+
+<div class="search-box-card">
+    <div class="container">
+        <div class="search-outer">
+            <div class="search-content">
+                <form action="search">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="into-section px-md-3 px-4">
+                                <p>Find Your <span>Holiday</span></p>
+                                <i class="flaticon-sun-umbrella "></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-8 col-12">
+                            <div class="row align-items-center">
+                                <div class="col-lg-5 col-md-4 col-6 ps-md-0 ps-4 py-md-0 py-3">
+                                    <div class="table_item">
+                                        <div class="form-group mb-3">
+                                            <select name="Category" id="categorySelect" class="selectpicker form-control" tabindex="-98" (change)="loadExecution()" required>
+                                                <option [selected]="true" value="0">Select Package</option>
+                                                <option *ngFor="let category of categories" value="{{category.CategoryId}}">{{category.CategoryName}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="execution_city" id="execution_city" class="selectpicker form-control" tabindex="-98" required>
+                                                <option [selected]="true" value="0">Select Departure Place</option>
+                                                <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-4 col-6 pe-md-0 pe-4 py-md-0 py-3">
+                                    <div class="table_item">
+                                        <div class="form-group mb-3">
+                                            <select name="days" id="custom-select-2" class="selectpicker form-control" tabindex="-98" required>
+                                                <option [selected]="true" value="0">Select Days</option>
+                                                <option value="3">3 Days / 2 Nights</option>
+                                                <option value="4">4 Days / 3 Nights</option>
+                                                <option value="5">5 Days / 4 Nights</option>
+                                                <option value="6">6 Days / 5 Nights</option>
+                                                <option value="7">7 Days / 6 Nights</option>
+                                                <option value="8">8 Days / 7 Nights</option>
+                                                <option value="9">9 Days / 8 Nights</option>
+                                                <option value="10">10 Days / 9 Nights</option>
+                                                <option value="11">11 Days / 10 Nights</option>
+                                                <option value="12">12 Days / 11 Nights</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="price" id="custom-select-2" class="selectpicker form-control" tabindex="-98" required>
+                                                <option value=""> Budget per person </option>
+                                                <option value="20000"> Less than ₹20,000 </option>
+                                                <option value="50000"> ₹20,000 to ₹50,000 </option>
+                                                <option value="100000"> ₹50,000 to ₹1 Lac </option>
+                                                <option value="200000">  ₹1 Lac to ₹2 Lac </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-12 py-md-0 pb-3">
+                                    <div class="table_item pe-3">
+                                        <div class="text-center">
+                                            <button type="submit" href="#" class="btn btn-danger rounded-0">SEARCH</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container ">
+    <div class="row">
+
+        <div class="wpb_column column_container col-md-6" *ngIf="haveofferone !=''">
+            <div class="vc_column-inner wpb_wrapper">
+                <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+                <div class="st-offer-new item has-matchHeight" style="height: 394.5px;" *ngIf="offerone!=undefined && offerone.length>0">
+                    <h2 class="item-title"> {{offerone[0].OfferTitle}}</h2>
+                    <p class="item-sub-title"> {{offerone[0].TitleSlug}}</p>
+                    <a [href]="sanitize(offerone[0].Link)" class="btn btn-default" title="See Deals">See Deals</a>
+                    <div class="img-cover st_1637500853" style="background: url({{offerone[0].Image}});"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wpb_column column_container col-md-3" *ngIf="haveoffertwo !=''">
+            <div class="vc_column-inner wpb_wrapper">
+                <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+                <div class="st-offer-new item has-matchHeight" style="height: 394.5px;" *ngIf="offertwo!=undefined && offertwo.length>0">
+                    <h2 class="item-title">{{offertwo[0].OfferTitle}}</h2>
+                    <p class="item-sub-title">{{offertwo[0].TitleSlug}}</p>
+                    <a [href]="sanitize(offertwo[0].Link)" class="btn btn-default" title="See Deals">See Deals</a>
+                    <div class="img-cover st_1637500854" style="background: url({{offertwo[0].Image}})"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wpb_column column_container col-md-3" *ngIf="haveofferthree !=''">
+            <div class="vc_column-inner wpb_wrapper">
+                <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+                <div class="st-offer-new item has-matchHeight" style="height: 394.5px;" *ngIf="offerthree!=undefined && offerthree.length>0">
+                    <h2 class="item-title">{{offerthree[0].OfferTitle}}</h2>
+                    <p class="item-sub-title">{{offerthree[0].TitleSlug}}</p>
+                    <a [href]="sanitize(offerthree[0].Link)" class="btn btn-default" title="See Deals">See Deals</a>
+                    <div class="img-cover st_1637500855" style="background: url({{offerthree[0].Image}})"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End .row-->
+</div>
+
+
+<div class="container py-3 pt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="blob mx-auto text-center">
+                <h2 class="m-0 display-6 text-uppercase">Package Categories</h2>
+                <div class="divider pt-4 mb-4">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <p>Let Us Help You to Plan Your Holidays Packages. Online Place for all spiritual yatra, Holiday Packages and Honeymoon Packages. You can book Vaishno Devi Yatra, Chardham yatra</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-category-carousal [categories]="categories"></app-category-carousal>
+
+<app-special-packages [bgImage]="'/assets/images/theme/slider/slide-2.jpg'" [packages]="packages"></app-special-packages>
+
+<div class="container py-3">
+    <div class="row">
+        <div class="col-12 pt-5">
+            <div class="blob mx-auto text-center">
+                <h2 class="m-0 display-6 text-uppercase">POPULAR DESTINATIONS</h2>
+                <div class="divider pt-4 mb-4">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <p>Longing for a vacation and have no idea of where to go? Don't worry, we brings you the best opportunity to enjoy holiday at different destinations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-3">
+    <div class="row justify-content-center pb-5">
+        <!-- <app-destination-card
+            class="col-lg-3 col-md-4 col-6 mb-5"
+            *ngFor="let destination of destinations"
+            [destination]="destination"
+        ></app-destination-card> -->
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="top-destination-item mb-2">
+                <a href="/category/uttarakhand-packages" class="text-decoration-none" title="Uttrakhand">
+                    <img class="img-responsive img-1245" src="/assets/images/destinations/Haridwar.png" alt="Image">
+                    <div class="overlay">
+                        <h2>Uttrakhand</h2>
+                        <p>Plan Your Tour to Uttrakhand With Us.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="top-destination-item mb-2">
+                <a href="/category/kerala-package" class="text-decoration-none" title="Kerala">
+                    <img class="img-responsive img-1245" src="/assets/images/uploads/Image-1624376969893.jpg" alt="Image">
+                    <div class="overlay">
+                        <h2>Kerala</h2>
+                        <p>Plan Your Tour to Kerala With Us.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="top-destination-item destination-margin focused mb-2">
+                <a href="/category/goa-packages" class="text-decoration-none" title="Goa">
+                    <img class="img-responsive img-3" src="/assets/images/destinations/Goa.png" alt="Image">
+                    <div class="overlay overlay-full">
+                        <h2>Goa</h2>
+                        <p>Plan Your Tour to Goa With Us.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="top-destination-item mb-2">
+                <a href="/category/himachal-packages" class="text-decoration-none" title="Himachal">
+                    <img class="img-responsive img-1245" src="https://omshubhyatra.in/assets/images/uploads/Image-1624106336471.jpg" alt="Image">
+                    <div class="overlay">
+                        <h2>Himachal</h2>
+                        <p>Plan Your Tour to Himachal With Us.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="top-destination-item mb-2">
+                <a href="/category/kashmir-packages" class="text-decoration-none" title="Kashmir">
+                    <img class="img-responsive img-1245" src="https://omshubhyatra.in/assets/images/uploads/Image-1624105639727.jpg" alt="Image">
+                    <div class="overlay">
+                        <h2>Kashmir</h2>
+                        <p>Plan Your Tour to Kashmir With Us.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<app-parallax-banner
+    [title]="'Om Subh Yatra'"
+    [height]="'300px'" 
+    [bgImage]="'/assets/images/theme/banner/kedarnath-long.jpg'"
+></app-parallax-banner>-->
+
+
+<div data-vc-full-width="true" data-vc-full-width-init="true" class="vc_row wpb_row st bg-holder st-solo-about-us vc_custom_1587959007516 vc_row-has-fill">
+    <div class="container ">
+        <div class="row">
+            <div class="st-about-us-left wpb_column column_container col-md-6">
+                <div class="vc_column-inner wpb_wrapper">
+
+                    <div class="wpb_text_column wpb_content_element ">
+                        <div class="wpb_wrapper">
+                            <p style="text-align: left; padding-left: 80px;">About Us</p>
+                            <h3 style="text-align: left; padding-left: 80px;">Never Be Alone</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="wpb_single_image wpb_content_element vc_align_left">
+
+                        <figure class="wpb_wrapper vc_figure">
+                            <div class="vc_single_image-wrapper   vc_box_border_grey"><img class="vc_single_image-img " src="https://omshubhyatra.in/assets/images/Group-25-2.png" width="476" alt="Group 25" title="Group 25"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <div class="st-about-us-right wpb_column column_container col-md-6">
+                <div class="vc_column-inner wpb_wrapper">
+
+                    <div class="wpb_text_column wpb_content_element ">
+                        <div class="wpb_wrapper">
+                            <p>Since 2014, we’ve helped more than 500,000 people of all ages enjoy the best outdoor experience of their lives. Whether it’s for one day or a two-week vacation, close to home or a foreign land and something like that.</p>
+                            <h3>Why Choose Us</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="wpb_text_column wpb_content_element ">
+                        <div class="wpb_wrapper">
+                            <p><img class="alignnone wp-image-8505" src="https://omshubhyatra.in/assets/images/smartph-300x300.png" alt="" width="49" height="49">BOOKING WITH SPREAD PAYMENTS</p>
+                            <p><img class="alignnone wp-image-8508" src="https://omshubhyatra.in/assets/images/Group-70@3x-300x300.png" alt="" width="48" height="48">SLEEP &amp; TRAVEL IN COMFORT</p>
+                            <p><img class="alignnone wp-image-8507" src="https://omshubhyatra.in/assets/images/Group-69@3x-300x300.png" alt="" width="48" height="48">FULLY LICENSED TOUR OPERATOR</p>
+
+                        </div>
+                    </div>
+
+                    <div class="wpb_text_column wpb_content_element  st-about--btn">
+                        <div class="wpb_wrapper">
+                            <p><a href="https://omshubhyatra.in/about" title="MORE ABOUT US">MORE ABOUT US</a></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End .row-->
+    </div>
+    <!--End .container-->
+</div>
+
+
+<div class="container py-2">
+    <div class="row">
+        <div class="col-12 pt-5">
+            <div class="blob mx-auto text-center">
+                <h2 class="m-0 display-6 text-uppercase">BEST RATED TRAVEL AGENCY</h2>
+                <div class="divider pt-4 mb-4">
+                    <i class="fas fa-spa"></i>
+                </div>
+                <p>Our customers love us! Read what they have to say below.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-2 pb-4">
+    <div class="row">
+        <div class="col-12">
+            <app-testimonials></app-testimonials>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{popupsTitle}}</h6>
+                <button type="button" class="close" (click)="closeModal()" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- <div class="col-sm-6">
+                        <img class="img-responsive img" src="{{popupsImage}}" style="max-width: 100%" alt="Image">
+                    </div> -->
+                    <div class="col-sm-12">
+                        <!-- <div class="card">
+                            <div class="card-body"> -->
+                        <app-enquiry-sidebar></app-enquiry-sidebar>
+                        <!-- </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<app-footer></app-footer>

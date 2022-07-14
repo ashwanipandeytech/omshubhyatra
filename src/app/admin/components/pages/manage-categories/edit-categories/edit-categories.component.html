@@ -1,0 +1,150 @@
+<div class="sidebar-container">
+    <app-sidenav></app-sidenav>
+        
+    <div class="right-content min-vh-100">
+        <div class="container-fluid">
+            <app-page-title [title]="'Edit Category'" [icon]="'fa-arrow-alt-circle-left'" [button]="'Return Back To All Categories'" [url]="'/admin/categories'"></app-page-title>
+
+            <div class="row pb-5">
+
+                <div class="col-md-8 col-12 mb-3">
+                    <form class="gateway-form" [formGroup]="editCategoryFrom" (ngSubmit)="editCategoryAction()">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <!-- Error Alert -->
+                                <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ errorMessage }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="CategoryName" class="form-label">Category Name</label>
+                                    <input type="text" class="form-control form-control-lg" id="CategoryName" formControlName="CategoryName" autocomplete="off">
+
+                                    <small *ngIf="editCategoryFrom.controls['CategoryName'].valid && editCategoryFrom.controls['CategoryName'].touched" class="text-success">
+                                        <small>Title Set</small>
+                                    </small>
+                                    <small *ngIf="editCategoryFrom.controls['CategoryName'].invalid && editCategoryFrom.controls['CategoryName'].touched" class="text-danger">
+                                        <small>Please Enter Category Name</small>
+                                    </small>
+                                    <small *ngIf="editCategoryFrom.controls['CategoryName'].untouched" class="text-muted">
+                                        <small>Please Enter Category Name</small>
+                                    </small>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 col-12">
+                                        <label for="CategorySlug" class="form-label">Category Slug</label>
+                                        <input type="text" class="form-control" id="CategorySlug" formControlName="CategorySlug" autocomplete="off">
+
+                                        <small *ngIf="editCategoryFrom.controls['CategorySlug'].valid && editCategoryFrom.controls['CategorySlug'].touched" class="text-success">
+                                            <small>Title Set</small>
+                                        </small>
+                                        <small *ngIf="editCategoryFrom.controls['CategorySlug'].invalid && editCategoryFrom.controls['CategorySlug'].touched" class="text-danger">
+                                            <small>Please Enter Category Slug</small>
+                                        </small>
+                                        <small *ngIf="editCategoryFrom.controls['CategorySlug'].untouched" class="text-muted">
+                                            <small>Please Enter Category Slug</small>
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <label for="StartingPrice" class="form-label">Starting Price</label>
+                                        <input type="number" class="form-control" id="StartingPrice" formControlName="StartingPrice" autocomplete="off" min="0">
+
+                                        <small *ngIf="editCategoryFrom.controls['StartingPrice'].valid && editCategoryFrom.controls['StartingPrice'].touched" class="text-success">
+                                            <small>Price Selected</small>
+                                        </small>
+                                        <small *ngIf="editCategoryFrom.controls['StartingPrice'].invalid && editCategoryFrom.controls['StartingPrice'].touched" class="text-danger">
+                                            <small>Please Enter Price</small>
+                                        </small>
+                                        <small *ngIf="editCategoryFrom.controls['StartingPrice'].untouched" class="text-muted">
+                                            <small>Please Select Price</small>
+                                        </small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body bg-light border-top border-bottom">
+                                <div class="mb-2">
+                                    <label class="form-label">Keys</label>
+                                </div>
+
+                                <div *ngFor="let Key of keysOptions; let i=index">
+                                    <div class="form-check form-check-inline">
+                                        <input name="category-keys" class="form-check-input" type="checkbox" [value]="Key.value" [id]="'key-popular-' + Key.value.toLowerCase()" (change)="checkboxAction($event)">
+                                        <label class="form-check-label" [for]="'key-popular-' + Key.value.toLowerCase()">{{ Key.name }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="mb-3">
+                                    <label for="Description" class="form-label">Category Description</label>
+                                    <textarea class="form-control" id="Description" rows="3" formControlName="Description"></textarea>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary">Edit Category</button>
+                            
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="col-md-4 col-12 mb-3">
+                    <div class="card shadow mb-3">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="enableUpload" checked
+                                (change)="enableDisableImageUploadAction();">
+                                <label class="form-check-label" for="enableUpload">Upload Image</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3" id="uploadImageCard">
+                        <img class="card-img-top" id="blah" [src]="imageSrc || 'http://placehold.it/1920x1080'" alt="your image" />
+                        <div class="card-body">
+                            <form [formGroup]="imageUploadForm" (ngSubmit)="imageUpload()">
+                                <label for="Image" class="form-label">Package Image</label>
+                                <input class="form-control" type="file" id="Image" formControlName="Image" (change)="onFileChange($event)">
+
+                                <small *ngIf="imageUploadForm.controls['Image'].valid && imageUploadForm.controls['Image'].touched" class="text-success">
+                                    <small>Image URL Entered</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].invalid && imageUploadForm.controls['Image'].touched" class="text-danger">
+                                    <small>Please Enter Image URL</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].untouched" class="text-muted">
+                                    <small>Please Select Image URL</small>
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3" id="uploadUrlCard" style="display: none;">
+                        <div class="card-body">
+                            <form [formGroup]="imageUploadForm">
+                                <label for="Image" class="form-label">Package Image</label>
+                                <input class="form-control" type="text" id="ImageUrl" formControlName="Image">
+
+                                <small *ngIf="imageUploadForm.controls['Image'].valid && imageUploadForm.controls['Image'].touched" class="text-success">
+                                    <small>Image Selected</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].invalid && imageUploadForm.controls['Image'].touched" class="text-danger">
+                                    <small>Please Enter Image</small>
+                                </small>
+                                <small *ngIf="imageUploadForm.controls['Image'].untouched" class="text-muted">
+                                    <small>Please Select Image</small>
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>

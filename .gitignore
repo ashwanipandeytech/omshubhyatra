@@ -1,0 +1,58 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+package-lock.json
+
+
+/api/node_modules
+# NativeScript
+/hooks
+/platforms
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+package-lock.json
+hooks/
+node_modules/
+tsconfig.json
+
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+src/assets/i18n/GROUPS/FS/DE.json
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+config/
+Capfile
+log/
+logs/
+developdeploybuild.sh
+format.json
+# System Files
+.DS_Store
+Thumbs.db
+.vscode/
+src/assets/i18n/GROUPS/
